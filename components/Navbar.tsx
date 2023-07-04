@@ -1,8 +1,9 @@
-import { NavLinks } from '@/constants/constants'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import AuthProviders from './AuthProviders'
+import { NavLinks } from '../constants/constants'
 
 //Built out at at (18:12): https://youtu.be/986hztrfaSQ?t=1092
 

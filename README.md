@@ -52,7 +52,11 @@
 6. (20:55) - Install **Tailwind CSS IntelliSense VS Extension** by Tailwind Labs
     - 
 
+7. Install the **Grafbase SDK** at (37:38)
+    - https://www.npmjs.com/package/@grafbase/sdk
 
+    - Initialize a new project:
+        - `npx grafbase init --config-format typescript`
 
 
 
