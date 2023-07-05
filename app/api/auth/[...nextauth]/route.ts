@@ -30,8 +30,30 @@ import { JWT } from 'next-auth/jwt'
 export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
-        clientId: "",
-        clientSecret: ''
-    })
-    ]
+            clientId: "",
+            clientSecret: ''
+        })
+    ],
+    //(55:59) connect jwt to grafbase
+    // encode(params: JWTEncodeParams): Awaitable<string>
+    jwt: {
+        encode: ({ secret, token }) => {
+
+        },
+        decode: async ({ secret, token }) => {
+
+        }
+    }, 
+    theme: {
+        colorScheme: 'light',
+        logo: '/logo.png'
+    }, 
+    callbacks: {
+        async session({session}) {
+
+        },
+        async signIn({ user }) {
+            
+        }
+    }
 }
