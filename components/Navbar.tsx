@@ -10,7 +10,10 @@ import { NavLinks } from '../constants/constants'
 const Navbar = () => {
 
 //Set up to null, come back later (24:38) (if logged in, profile pic, otherwise login)
-    const session = {}
+    // const session = {}; //default "active session"
+    // const session = {}; //default "active session"
+    const session = null; //default "active session"
+
 
   return (
     <nav className="flexBetween navbar">

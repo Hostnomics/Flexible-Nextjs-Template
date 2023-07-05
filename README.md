@@ -1,6 +1,6 @@
 
 
-## Install next.js
+## Key Project Next.js Installations: 
 
 - npm install -g npm
 
@@ -28,8 +28,15 @@
         - _significantly speeds up our development(?)_
 
 
+3. Install the [Grafbase SDK](https://www.npmjs.com/package/@grafbase/sdk) at (37:38)
+    - `npx grafbase init --config-format typescript`
 
+4. Install [NextAuth.js](https://next-auth.js.org/getting-started/example) at (52:02)
+    - `npm install next-auth`
+    - Create **App Router** at this directory: `pages/api/auth/[...nextauth].js`
 
+---
+---
 
 
 ## Next.js Format Structure
@@ -59,7 +66,42 @@
         - `npx grafbase init --config-format typescript`
 
 
+8. Update github. Then import repository into [grafbase.com/new](https://grafbase.com/new) at [(44:28)](https://youtu.be/986hztrfaSQ?t=2668)
+    - (1) Connect github account. 
+    - (2) Approve repository to connect to. 
+    - (3) Click **Import** button.
+        - If error _Repository does not contain grafbase/schema graphql file._, see at (44:32)
+    - (4) Click **Deploy**
+    - (5) Click **CONNECT** button
+    - (6) Get the Grafbase **API Endpoint** and **API Key**
 
+
+
+9. At [(45:08)](https://youtu.be/986hztrfaSQ?t=2708) set up project `.env` file to store Grafbase API Endpoint and Key. 
+
+
+10. At 46:26 - Implement **AuthProviders** using **(1) Next Auth** and **(2) _connected to Grafbase_**
+
+11. At [(50:30)](https://youtu.be/986hztrfaSQ?t=3030) - What are **Providers** and Set them up. 
+
+    - Fetch **providers** with a _useEffect()_ hook
+
+
+12. (52:02) - Add **NextAuth.js** 
+    - Address the error we received `app-index.js:32 [next-auth][error][CLIENT_FETCH_ERROR] `
+
+    - Go to [NextAuth.js](https://next-auth.js.org/) and see the [Getting Started Docs Here.](https://next-auth.js.org/getting-started/example)
+
+    - `npm install next-auth`
+    - Create **App Router** at this directory: `pages/api/auth/[...nextauth].js`
+
+
+13. 
+
+
+---
+
+---
 
 *Default Message* [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
