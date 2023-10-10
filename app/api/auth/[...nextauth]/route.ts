@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth from "next-auth";
 
 //Example (~53:47) from: https://next-auth.js.org/getting-started/example 
 
@@ -16,44 +16,12 @@ import NextAuth from "next-auth"
 // export default NextAuth(authOptions)
 
 
-import { NextAuthOptions, User } from 'next-auth';
+//Built out (57:30) and uses lib/session.ts: https://youtu.be/986hztrfaSQ?si=RA5CKSXc1NXfLEEL&t=3450
+// import { authOptions } from '@/lib/session';
+import { authOptions } from '../../../../lib/session';
 
-// immport some adapters (53:57)
-import { AdapterUser } from 'next-auth/adapters';
 
-import GoogleProvider from 'next-auth/providers/google'
+const handler = NextAuth(authOptions)
 
-import jsonwebtoken from 'jsonwebtoken'
-import { JWT } from 'next-auth/jwt'
-
-// (54:54) Export authOptions of type NextAuthOptions (equal to an object, here a providers array)
-export const authOptions: NextAuthOptions = {
-    providers: [
-        GoogleProvider({
-            clientId: "",
-            clientSecret: ''
-        })
-    ],
-    //(55:59) connect jwt to grafbase
-    // encode(params: JWTEncodeParams): Awaitable<string>
-    jwt: {
-        encode: ({ secret, token }) => {
-
-        },
-        decode: async ({ secret, token }) => {
-
-        }
-    }, 
-    theme: {
-        colorScheme: 'light',
-        logo: '/logo.png'
-    }, 
-    callbacks: {
-        async session({session}) {
-
-        },
-        async signIn({ user }) {
-            
-        }
-    }
-}
+//(57:50) - allow us to make GET and POST requests using next-auth
+export { handler as GET, handler as POST }

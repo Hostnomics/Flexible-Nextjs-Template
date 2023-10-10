@@ -96,7 +96,46 @@
     - `npm install next-auth`
     - Create **App Router** at this directory: `pages/api/auth/[...nextauth].js`
 
-13.
+13. Create a new [console.cloud.google.com project](https://console.cloud.google.com/)
+
+    - Name: `Promptopia-providers`
+
+      - Go to **APIs & Services** => **OAuth consent screen**
+      - Type can be **external**. Add email and project name, just leave other options blank and hit **Save and Continue**.
+
+    - Then select **APIs & Services** => **Credentials** => _Create Credentials_ => **OAuth Client Id**
+      - _Application Type_ = **Web Application**
+      - _Application Name_ = **Flexibble**
+      - _Authorized JavaScript Origins_ = **http://localhost:3000**
+      - _Authorized Redirect URIs_ = **http://localhost:3000/api/auth/callback/google**
+      - Then click **Create**
+
+14. Complete `lib/sessions.ts`
+
+15. Create utility function in `lib/sessions.ts` to use in `Navbar.tsx` to get current session of user
+
+    - (1:05:50) - import `SessionInterface` from `../common.types` and define it in `lib/sessions.ts`
+    - ```js
+        import { SessionInterface } from '../common.types';
+
+        //Create utility function to determine if user is logged in (ie Navbar.tsx) at (1:05:50): https://youtu.be/986hztrfaSQ?si=h_rCesP04IUylZFC&t=3950
+        export async function getCurrentUser(){
+            //specify type as SessionInterface
+            const session = await getServerSession(authOptions) as SessionInterface;
+        }
+      ```
+
+    - Project has `commmon.types.ts` with helper functions.
+
+16. Set up first graphQL interaction in new file `lib/actions.ts` [(1:11:30)](https://youtu.be/986hztrfaSQ?si=tUFjl9XIrDfImZV1&t=4290)
+
+    - Import `{ GraphQLClient } from 'graphql-request';`
+    - spin up local **grafbase** server using 0.24 if you are on windows with command:
+      - **npx grafbase@0.24 dev**
+    -
+
+17. Set up new folder **graphql** with file `index.ts` [(1:17:35)](https://youtu.be/986hztrfaSQ?si=iTq0_ZrmDH9hKiTl&t=4655)
+    - In `graphql/index.ts` we an write all of our queries via => `lib/actions.ts` => `lib/sessions.ts` => `components/AuthProviders.tsx` (?) => `components/Navbar.tsx`
 
 ---
 
