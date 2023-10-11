@@ -11,8 +11,11 @@ import GoogleProvider from 'next-auth/providers/google';
 import jsonwebtoken from 'jsonwebtoken';
 
 import { JWT } from 'next-auth/jwt';
-import { SessionInterface } from '../common.types';
+//Around (1:21:30ish) add UserProfile to common.types import 
+import { SessionInterface, UserProfile } from '../common.types';
 
+//At (1:21:40) import getUser from ./actions.ts in the same lib directory
+import { getUser, createUser } from './actions';
 
 //(54:45) export authOptions of type NextAuthOptions equal to an object {} with providers: [] array
 export const authOptions: NextAuthOptions = {
@@ -41,16 +44,42 @@ export const authOptions: NextAuthOptions = {
     //(56:44) setup callbacks
     callbacks: {
         async session({ session }) {
+        //(1:26:40) - merge Google user with our DB user
+            const email = session?.user?.email as string;
+
+            try {
+                const data = await getUser(email) as { user?: UserProfile }
+
+                const newSession = {
+                    ...session, 
+                    user: {
+                        ...session.user,
+                        ...data?.user
+                    }
+                }
+
+                return newSession;
+            } catch (e) {
+                console.log("Error retrieving user data in lib/session.ts, authOptions callbacks was: ", e);
+                //always expects return a session so return regular session if error
+                return session;
+            }
+
             //triggered every time a user visits the page, set up a new session
             //Test out by just returning session to get rid of typescript error (1:01:48): https://youtu.be/986hztrfaSQ?si=g3vV8v76sfh_UeRb&t=3708
-            return session;
+            // return session; // don't return session anymore, return in the try block (1:27:53)
         },
         //user is of type AdapterUser or
         async signIn({ user }: {user: AdapterUser | User}){
             try {
                 //(1) get the user from DB if the user exists (1:02:38)
-
+                    const userExists = await getUser(user?.email as string) as { user?: UserProfile } //import UserProfile from common.types
                 //(2) create the user if they don't exist
+                    if (!userExists.user) {
+                        // await createUser which we will need to create in `lib/actions.ts` => `graphql/index.ts`
+                        //(1:24:50)
+                        await createUser(user.name as string, user.email as string, user.image as string);
+                    }
 
                 //(3) return true.
                 return true;
@@ -72,3 +101,6 @@ export async function getCurrentUser(){
 
     return session; 
 }
+
+// (1:26:00) - Return a Google user: https://youtu.be/986hztrfaSQ?si=i8EyG_5mg-aEqPHw&t=5160
+// (1) name, (2) email, (3) avatarUrl => hook up with our DB user who has it's own projects
